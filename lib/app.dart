@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:me_mind/common/theme/custom_theme.dart';
 import 'package:me_mind/screen/main/s_main.dart';
 
+import 'common/theme/custom_theme_app.dart';
+
 class App extends StatefulWidget {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey();
 
@@ -33,13 +35,20 @@ class AppState extends State<App> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      navigatorKey: App.navigatorKey,
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      title: 'Memind',
-      home: const MainScreen(),
+    return CustomThemeApp(
+      child: Builder(
+        builder: (context) {
+          return MaterialApp(
+            navigatorKey: App.navigatorKey,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            locale: context.locale,
+            title: 'Memind',
+            theme: context.themeType.themeData,
+            home: const MainScreen(),
+          );
+        }
+      ),
     );
   }
 

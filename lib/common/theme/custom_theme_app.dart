@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import '../../app.dart';
 import 'custom_theme.dart';
@@ -15,11 +16,7 @@ class CustomThemeApp extends StatefulWidget {
 
 class _CustomThemeAppState extends State<CustomThemeApp> {
   final CustomTheme? defaultTheme = App.defaultTheme;
-  late CustomTheme? theme = defaultTheme;
-
-  void handleChangeTheme(CustomTheme theme) {
-    setState(() => this.theme = theme);
-  }
+  late CustomTheme theme = defaultTheme ?? systemTheme;
 
   @override
   Widget build(BuildContext context) {
@@ -29,4 +26,24 @@ class _CustomThemeAppState extends State<CustomThemeApp> {
       child: widget.child,
     );
   }
+
+  CustomTheme get systemTheme {
+    switch (systemBrightness) {
+      case Brightness.dark:
+        return CustomTheme.dark;
+      case Brightness.light:
+        return CustomTheme.light;
+    }
+  }
+
+  void handleChangeTheme(CustomTheme theme) {
+    setState(() => this.theme = theme);
+  }
+
+  Brightness get systemBrightness =>
+      SchedulerBinding.instance.platformDispatcher.platformBrightness;
+}
+
+extension ContextExtension on BuildContext {
+  CustomTheme get themeType => CustomThemeHolder.of(this).theme;
 }

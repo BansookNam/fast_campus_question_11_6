@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:me_mind/common/theme/custom_theme.dart';
 import 'package:me_mind/common/theme/shadows/abs_theme_shadows.dart';
+
 import 'color/abs_theme_colors.dart';
 
 class CustomThemeHolder extends InheritedWidget {
   final AbstractThemeColors appColors;
   final AbsThemeShadows appShadows;
-  final CustomTheme? theme;
+  final CustomTheme theme;
   final Function(CustomTheme) changeTheme;
 
   CustomThemeHolder({
@@ -14,7 +15,7 @@ class CustomThemeHolder extends InheritedWidget {
     required this.theme,
     required this.changeTheme,
     Key? key,
-  })  : appColors = theme!.appColors,
+  })  : appColors = theme.appColors,
         appShadows = theme.appShadows,
         super(key: key, child: child);
 
